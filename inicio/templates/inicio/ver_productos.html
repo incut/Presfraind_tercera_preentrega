@@ -1,0 +1,22 @@
+{% extends "index.html" %}
+
+{% block title %}
+Productos
+{% endblock title %}
+
+{% block h1_header %}
+Listado de productos
+{% endblock h1_header %}
+
+{% block main %}
+{% if producto %}
+    <ul>
+        {% for producto  in producto %}
+            <li>{{producto}}</li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No hay productos listados</p>    
+{% endif %}
+
+{% endblock main %}
