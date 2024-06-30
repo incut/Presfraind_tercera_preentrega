@@ -1,19 +1,18 @@
 {% extends "index.html" %}
-
 {% block title %}
-Crear Producto
+Iniciar sesion
 {% endblock title %}
 
 {% block h1_header %}
-Producto
-{% endblock h1_header %}
+Inicio de sesion
+{% endblock h1_header %} 
 
 {% block main %}
-<form action={% url "agregar_producto" %} method='POST'>
+<form action={% url "login" %} method = 'post'>
     {% csrf_token %}
 
     {{formulario}}
 
-    <input type="submit" value="Enviar">
+    <input type="submit" value="Iniciar Sesion">
 </form>
 {% endblock main %}
