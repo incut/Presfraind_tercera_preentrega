@@ -12,7 +12,7 @@ Editando a {{producto.nombre}}
 <form action={% url "editar_producto" producto.id %} method='POST'>
     {% csrf_token %}
 
-    {{formulario}}
+    {{form}}
 
     <input type="submit" value="Enviar">
 </form>

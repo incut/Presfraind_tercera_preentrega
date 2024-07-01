@@ -1,0 +1,27 @@
+{% extends "index.html" %}
+
+{% block title %}
+Producto
+{% endblock title %}
+
+{% block h1_header %}
+Eliminando {{producto.nombre}}
+{% endblock h1_header %} 
+
+{% block main %}
+
+<form action={% url "eliminar_producto" producto.id%} method = 'post'>
+    {% csrf_token %}
+    <p>Confirma la eliminacion del producto {{producto.nombre}}?</p>
+
+    <input type='submit' value='Eliminar'>
+</form>
+<ul>
+    <li>Nombre: {{producto.nombre}}</li>
+    <li>Marca: {{producto.marca}}</li>
+    <li>Precio: {{producto.precio}}</li>
+    <li>Cantidad: {{producto.cantidad}}</li>
+    <li>Fecha: {{producto.fecha}}</li>
+</ul>
+
+{% endblock main %}

@@ -1,0 +1,21 @@
+{% extends "index.html" %}
+
+{% block title %}
+Producto
+{% endblock title %}
+
+{% block h1_header %}
+{{producto.nombre}}
+{% endblock h1_header %} 
+
+{% block main %}
+
+<ul>
+    <li>Nombre: {{ producto.nombre }}</li>
+    <li>Marca: {{ producto.marca }}</li>
+    <li>Precio: {{ producto.precio }}</li>
+    <li>Cantidad: {{ producto.cantidad }}</li>
+    <li>Fecha: {{ producto.fecha }}</li>
+<ul>    
+
+{% endblock main %}

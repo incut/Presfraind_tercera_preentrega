@@ -1,55 +1,60 @@
+from typing import Any
 from django.shortcuts import render,redirect
 from inicio.form import CreateProductoFormulario,BuscarProductoFormulario,EditarProductoFormulario
-from inicio import models
+from django.views.generic import ListView
+from django.views.generic.edit import CreateView, DeleteView, UpdateView
+from django.views.generic.detail import DetailView
+from inicio.models import Producto
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.urls import reverse_lazy
+
 
 def inico (request):
     return render(request, 'inicio/inicio.html')
 
-def agregar_producto(request):
-    formulario = CreateProductoFormulario()
+class Productos(LoginRequiredMixin, ListView):
+    model = Producto 
+    template_name = 'inicio/ver_productos.html'
+    context_object_name = 'productos'
+    paginate_by = 10
     
-    if request.method == 'POST':
-        formulario = CreateProductoFormulario(request.POST)
-        if formulario.is_valid():
-            datos = formulario.cleaned_data
-            producto = models.Producto(
-                nombre=datos['nombre'],
-                cantidad=datos['cantidad'],
-                precio=datos['precio']
-            )
-            producto.save()
-            return redirect('ver_productos')
-                   
-    return render(request, 'inicio/crear_producto.html', {'formulario': formulario }) 
+    def get_queryset(self):
+        nombre = self.request.GET.get('nombre', '')
+        if nombre:
+            return self.model.objects.filter(nombre__icontains=nombre)
+        else:
+            return self.model.objects.all()
+    
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['formulario'] = BuscarProductoFormulario()
+        context['nombre'] = self.request.GET.get('nombre', '')
+        return context
 
-def ver_productos(request):
-    formulario = BuscarProductoFormulario(request.GET)
-    producto = models.Producto.objects.none()
-    if formulario.is_valid():
-        nombre = formulario.cleaned_data['nombre']
-        producto = models.Producto.objects.filter(nombre__icontains=nombre)
-    
-    return render(request, 'inicio/ver_productos.html', {'producto': producto, 'formulario': formulario})   
+class CrearProducto(LoginRequiredMixin,CreateView):
+    model = Producto
+    template_name = 'inicio/crear_producto.html'
+    success_url = reverse_lazy('ver_productos')
+    fields = ['nombre','marca' ,'cantidad', 'precio', 'fecha']
 
-def eliminar_producto(request, id):
-    producto = models.Producto.objects.get(id=id)
-    producto.delete()
+class EliminarProducto(LoginRequiredMixin,DeleteView):
+    model = Producto
+    template_name = "inicio/eliminar_producto.html"
+    success_url = reverse_lazy('ver_productos')
     
-    return redirect('ver_productos')
-    
-def editar_producto(request, id):
-    producto = models.Producto.objects.get(id=id) 
-    
-    formulario = EditarProductoFormulario(initial={'nombre': producto.nombre,'precio': producto.precio,'cantidad': producto.cantidad})
-    
-    if request.method == 'POST':
-        formulario = EditarProductoFormulario(request.POST)
-        if formulario.is_valid():
-            datos = formulario.cleaned_data
-            producto.nombre = datos['nombre']
-            producto.precio = datos['precio']
-            producto.cantidad = datos['cantidad']
-            producto.save()
-            return redirect('ver_productos')
-    return render(request, 'inicio/editar_producto.html', {'formulario': formulario, 'producto': producto})
-# Create your views here.
+class EditarProducto(LoginRequiredMixin,UpdateView):
+    model = Producto
+    template_name = "inicio/editar_producto.html"
+    success_url = reverse_lazy('ver_productos')
+    fields = ['nombre','marca' ,'cantidad', 'precio', 'fecha']
+
+class VerProductos(DetailView):
+    model = Producto
+    template_name = "inicio/producto.html"
+    context_object_name = 'producto'
+
+
+
+
+
