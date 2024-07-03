@@ -6,6 +6,7 @@ class ProductoFormularioBase(forms.Form):
     cantidad = forms.IntegerField()
     precio = forms.DecimalField(max_digits=10,decimal_places=2)
     fecha = forms.DateTimeField()
+    foto = forms.ImageField(required=False) 
     
 class CreateProductoFormulario(ProductoFormularioBase):
     ...

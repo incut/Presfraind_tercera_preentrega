@@ -1,19 +1,20 @@
 {% extends "index.html" %}
-
 {% block title %}
-Editando Producto 
+Cambiar contasenia
 {% endblock title %}
 
 {% block h1_header %}
-Editando a {{producto.nombre}}
+Cambiar contasenia
 {% endblock h1_header %} 
 
 {% block main %}
-<form action={% url "editar_producto" producto.id %} method='POST' enctype="multipart/form-data">
+
+<form action={% url 'cambiar_pass' %} method='POST'>
     {% csrf_token %}
 
     {{form}}
 
-    <input type="submit" value="Enviar">
+    <input type="submit" value="Cambiar">
 </form>
+
 {% endblock main %}

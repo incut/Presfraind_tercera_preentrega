@@ -1,6 +1,6 @@
 from typing import Any
-from django.shortcuts import render,redirect
-from inicio.form import CreateProductoFormulario,BuscarProductoFormulario,EditarProductoFormulario
+from django.shortcuts import render
+from inicio.form import BuscarProductoFormulario,EditarProductoFormulario
 from django.views.generic import ListView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from django.views.generic.detail import DetailView
@@ -36,7 +36,7 @@ class CrearProducto(LoginRequiredMixin,CreateView):
     model = Producto
     template_name = 'inicio/crear_producto.html'
     success_url = reverse_lazy('ver_productos')
-    fields = ['nombre','marca' ,'cantidad', 'precio', 'fecha']
+    fields = ['nombre','marca' ,'cantidad', 'precio', 'fecha', 'foto']
 
 class EliminarProducto(LoginRequiredMixin,DeleteView):
     model = Producto
@@ -47,12 +47,15 @@ class EditarProducto(LoginRequiredMixin,UpdateView):
     model = Producto
     template_name = "inicio/editar_producto.html"
     success_url = reverse_lazy('ver_productos')
-    fields = ['nombre','marca' ,'cantidad', 'precio', 'fecha']
+    fields = ['nombre','marca' ,'cantidad', 'precio', 'fecha','foto']
 
 class VerProductos(DetailView):
     model = Producto
     template_name = "inicio/producto.html"
     context_object_name = 'producto'
+
+def about(request):
+    return render(request, 'inicio/sobre_mi.html')
 
 
 

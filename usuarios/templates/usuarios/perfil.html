@@ -1,0 +1,26 @@
+{% extends "index.html" %}
+
+{% block title %}
+Perfil
+{% endblock title %}
+
+{% block h1_header %}
+Perfil de {{ usuario.username }}
+{% endblock h1_header %}
+
+{% block main %}
+<p><strong>Email:</strong> {{ usuario.email }}</p>
+<p><strong>Nombre:</strong>{{usurario.first_name}}</p>
+<p><strong>Nombre:</strong>{{usurario.last_name}}</p>
+{% if datosextra %}
+    {% if request.user.datosextra.avatar %}
+    <p><strong>Avatar:</strong></p>
+    <img src="{{ datosextra.avatar.url }}" alt="Avatar" style="width: 150px; height: 150px;">
+    {% endif %}
+    <p><strong>Color Favorito:</strong>{{ datosextra.color_favorito }}</p>
+{% else %}
+    <p>No hay datos extra para este usuario.</p>
+{% endif %}
+
+<a href={% url 'editar_perfil' %}>Editar Perfil</a>
+{% endblock main %}

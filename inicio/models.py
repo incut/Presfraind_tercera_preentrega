@@ -6,6 +6,7 @@ class Producto(models.Model):
     marca = models.CharField(default='proyecto',max_length=20)
     cantidad = models.IntegerField(default=0)
     precio = models.DecimalField(default=0,max_digits=10,decimal_places=2)
+    foto = models.ImageField(upload_to='fotos', blank=True, null=True)
     fecha = models.DateField(default = date.today )
         
     def __str__(self):

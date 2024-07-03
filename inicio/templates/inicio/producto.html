@@ -11,11 +11,17 @@ Producto
 {% block main %}
 
 <ul>
-    <li>Nombre: {{ producto.nombre }}</li>
-    <li>Marca: {{ producto.marca }}</li>
-    <li>Precio: {{ producto.precio }}</li>
-    <li>Cantidad: {{ producto.cantidad }}</li>
-    <li>Fecha: {{ producto.fecha }}</li>
+    <li><strong>Nombre:</strong> {{ producto.nombre }}</li>
+    <li><strong>Marca:</strong> {{ producto.marca }}</li>
+    <li><strong>Precio:</strong> {{ producto.precio }}</li>
+    <li><strong>Cantidad:</strong> {{ producto.cantidad }}</li>
+    <li><strong>Fecha:</strong> {{ producto.fecha }}</li>
+    {% if producto.foto %}
+        <li><strong>Foto:</strong> <img src="{{ producto.foto.url }}" alt="Foto de {{ producto.nombre }}" style="width: 150px; height: 150px;"></li>
+    {% else %}
+        <li><strong>Foto:</strong> No hay foto disponible</li>
+    {% endif %}
+  
 <ul>    
 
 {% endblock main %}
